@@ -1,9 +1,12 @@
+import { rerender } from "../render";
+
 let state = {
   profilePage: {
     posts: [
       { id: 1, message: "Hi! How are you?", likesCount: 12 },
       { id: 2, message: "It's my first post", likesCount: 11 }
-    ]
+    ],
+    newPostText: "it kamasytra"
   },
   messagePage: {
     dialogs: [
@@ -22,6 +25,23 @@ let state = {
       { id: 5, message: "Yo" }
     ]
   }
+}
+
+export let addPost = () => {
+  state.profilePage.posts.push({
+    id: 3,
+    message: state.profilePage.newPostText,
+    likesCount: 0
+  });
+
+  state.profilePage.newPostText = "";
+
+  rerender(state);
+}
+
+export let updateNewPostText = (newText) => {
+  state.profilePage.newPostText = newText;
+  rerender(state);
 }
 
 export default state;
