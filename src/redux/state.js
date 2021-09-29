@@ -1,5 +1,12 @@
-const UPDATE_NEW_TEXT = "UPDATE-NEW-POST-TEXT";
-const ADD_POST = "ADD-POST"
+import profileReducer from "./profileReducer";
+import dialogReducer from './dialogReducer';
+import sidebarReducer from "./sidebarReducer";
+
+
+const UPDATE_NEW_POST_TEXT = "UPDATE-NEW-POST-TEXT";
+const ADD_POST = "ADD-POST";
+const UPDATE_NEW_MESSAGE_BODY = "UPDATE-NEW-MESSAGE-BODY";
+const SEND_MESSAGE = "SEND-MESSAGE";
 
 let store = {
   _state: {
@@ -25,8 +32,10 @@ let store = {
         { id: 3, message: "Yo" },
         { id: 4, message: "Yo" },
         { id: 5, message: "Yo" }
-      ]
-    }
+      ],
+      newMessageBody: ""
+    },
+    sidebarPage: {}
   },
   _callSubscriber() {
     console.log('check check check');
@@ -40,32 +49,22 @@ let store = {
   },
 
   dispatch(action) { // {type: 'ADD-POST', otherData: ...}
-    if (action.type === ADD_POST) {
-      this._state.profilePage.posts.push({
-        id: 3,
-        message: this._state.profilePage.newPostText,
-        likesCount: 0
-      });
-      this._state.profilePage.newPostText = "";
-      this._callSubscriber(this._state);
-    } else if (action.type === UPDATE_NEW_TEXT) {
-      this._state.profilePage.newPostText = action.newText;
-      this._callSubscriber(this._state);
-    }
+    this._state.profilePage = profileReducer(this._state.profilePage, action);
+    this._state.messagePage = dialogReducer(this._state.messagePage, action);
+    this._state.sidebarPage = sidebarReducer(this._state.sidebarPage, action);
+
+    this._callSubscriber(this._state);
   }
 }
 
-export const addPostActionCreator = () => {
-  return {
-    type: ADD_POST
-  }
-}
+export const addPostCreator = () => ({ type: ADD_POST });
+export const updateNewPostTextCreator = (text) =>
+  ({ type: UPDATE_NEW_POST_TEXT, newText: text });
 
-export const updateNewPostTextActionCreator = (text) => {
-  return {
-    type: UPDATE_NEW_TEXT,
-    newText: text
-  }
-}
+export const sendMessageCreator = () => ({ type: SEND_MESSAGE });
+export const updateNewMessageBodyCreator = (text) =>
+  ({ type: UPDATE_NEW_MESSAGE_BODY, body: text });
+
+
 
 export default store;
