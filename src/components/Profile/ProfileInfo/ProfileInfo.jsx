@@ -6,7 +6,7 @@ const ProfileInfo = (props) => {
   return (
     <div>
       <div className={s.header}>
-        <img src="https://phonoteka.org/uploads/posts/2021-03/1616706027_48-p-kartinki-dlya-fona-saita-53.jpg" />
+        <img src="https://phonoteka.org/uploads/posts/2021-03/1616706027_48-p-kartinki-dlya-fona-saita-53.jpg" alt="" />
       </div>
       <div className={s.descriptionBlock}>
         ava + desc
