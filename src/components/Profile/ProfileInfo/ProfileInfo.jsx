@@ -27,14 +27,14 @@ const ProfileInfo = (props) => {
           </div>
           <div className={s.contacts}>
             <ul className={s.contactsList}>
-              <li><span className={s.contactService}>facebook: </span><a href={props.profile.contacts.facebook}>{props.profile.contacts.facebook}</a></li>
-              <li><span className={s.contactService}>website: </span><a href={props.profile.contacts.website}>{props.profile.contacts.website}</a></li>
-              <li><span className={s.contactService}>vk: </span><a href={props.profile.contacts.vk}>{props.profile.contacts.vk}</a></li>
-              <li><span className={s.contactService}>twitter: </span><a href={props.profile.contacts.twitter}>{props.profile.contacts.twitter}</a></li>
-              <li><span className={s.contactService}>instagram: </span> <a href={props.profile.contacts.instagram}>{props.profile.contacts.instagram}</a></li>
-              <li><span className={s.contactService}>youtube: </span><a href={props.profile.contacts.youtube}>{props.profile.contacts.youtube}</a></li>
-              <li><span className={s.contactService}>github: </span><a href={props.profile.contacts.github}>{props.profile.contacts.github}</a></li>
-              <li><span className={s.contactService}>mainLink: </span><a href={props.profile.contacts.mainLink }>{props.profile.contacts.mainLink }</a></li>
+              <li><span className={s.contactService}>facebook: </span><a href="">{props.profile.contacts.facebook}</a></li>
+              <li><span className={s.contactService}>website: </span><a href="">{props.profile.contacts.website}</a></li>
+              <li><span className={s.contactService}>vk: </span><a href="">{props.profile.contacts.vk}</a></li>
+              <li><span className={s.contactService}>twitter: </span><a href="">{props.profile.contacts.twitter}</a></li>
+              <li><span className={s.contactService}>instagram: </span> <a href="">{props.profile.contacts.instagram}</a></li>
+              <li><span className={s.contactService}>youtube: </span><a href="">{props.profile.contacts.youtube}</a></li>
+              <li><span className={s.contactService}>github: </span><a href="">{props.profile.contacts.github}</a></li>
+              <li><span className={s.contactService}>mainLink: </span><a href="">{props.profile.contacts.mainLink }</a></li>
             </ul>
           </div>
           <div className={s.lookingForAJob}>
