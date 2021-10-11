@@ -26,13 +26,10 @@ export const toLogin = () => {
   return (dispatch) => {
     loginApi.login().then(data => {
       if (data.resultCode === 0) {
-        console.log(data)
         dispatch(setUserData(data.data.id, data.data.email, data.data.login));
       }
     });
   }
 }
-
-
 
 export default authReducer;
