@@ -21,9 +21,14 @@ export const usersApi = {
 }
 
 export const loginApi = {
-  login() {
+  isLogin() {
     return instance.get(`/auth/me`).then(response => response.data);
+  },
+  toLogin(email, password, rememberMe) {
+    return instance.post('auth/login', { email, password, rememberMe }).then(response => response.data);
   }
+
+
 }
 
 export const profileApi = {
@@ -37,3 +42,4 @@ export const profileApi = {
     return instance.put('profile/status', { status: status });
   }
 }
+

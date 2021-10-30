@@ -13,6 +13,7 @@ class UsersComponent extends React.Component {
 
   onPageChanged = (pageNumber) => {
     this.props.getUsers(pageNumber, this.props.pageSize);
+    this.props.setCurrentPage(pageNumber);
   }
 
   render() {
