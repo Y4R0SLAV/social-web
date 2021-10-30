@@ -4,11 +4,17 @@ import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import { Field} from 'redux-form';
 import WithReduxFormComponent from './../../hoc/withReduxFrom';
+import {WithValidationComponent} from './../common/FormsControl/FormsControl';
+import { requiered } from '../../utilits/validators/validator';
+import { MaxLengthCreator } from './../../utilits/validators/validator';
 
+
+const maxLength30 = MaxLengthCreator(30);
+const Textarea = WithValidationComponent('textarea');
 
 let DialogsForm = (props) => {
   return <form onSubmit={props.handleSubmit}>
-        <div> <Field component="textarea" name="messageBody" placeholder="Enter youe message"/></div>
+        <div> <Field component={Textarea} name="messageBody" placeholder="Enter your message" validate={[requiered, maxLength30]}/></div>
         <div> <button>Send Message</button> </div>
     </form>
 }

@@ -3,12 +3,18 @@ import s from "./MyPosts.module.css";
 import Post from './Post/Post';
 import { reduxForm, Field } from 'redux-form';
 import WithReduxFormComponent from './../../../hoc/withReduxFrom';
+import {WithValidationComponent} from './../../common/FormsControl/FormsControl';
+import { requiered } from '../../../utilits/validators/validator';
+import { MaxLengthCreator } from './../../../utilits/validators/validator';
 
+
+const maxLength100 = MaxLengthCreator(100);
+const Textarea = WithValidationComponent('textarea');
 
 const PostForm = (props) => {
   return <form onSubmit={props.handleSubmit}>
     <div>
-      <Field component="textarea" name="postBody"/>
+      <Field component={Textarea} name="postBody" validate={[requiered, maxLength100]}/>
     </div>
     <div>
       <button >Add post</button>
