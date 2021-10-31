@@ -12,12 +12,20 @@ import DialogsContainer from './components/Dialogs/DialogsContainer';
 import UsersContainer from './components/Users/UsersContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/login/login';
+import { connect } from 'react-redux';
+import { initializeApp } from './redux/appReducer';
+import Preloader from './components/common/Preloader/Preloader';
 
 
-const App = (props) => {
-  // props = [posts dialogsData messagesData]
-  return (
-    <div className="app-wrapper">
+class App extends React.Component {
+  componentDidMount() {
+    this.props.initializeApp();
+  }
+
+  render() {
+    if (!this.props.initialized) return <Preloader />
+
+    return <div className="app-wrapper">
       <HeaderContainer />
       <Navbar />
       <div className="app-wrapper-content">
@@ -33,7 +41,11 @@ const App = (props) => {
         <Route path="/login" render={() => <Login />} />
       </div>
     </div>
-  );
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  initialized: state.app.initialized
+});
+
+export default connect(mapStateToProps, { initializeApp })(App);

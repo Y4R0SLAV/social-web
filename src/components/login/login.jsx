@@ -10,6 +10,7 @@ import s from './../common/FormsControl/FormsControl.module.css';
 const Input = WithValidationComponent('input');
 
 const LoginForm = (props) => {
+  console.log(props);
   return <form onSubmit={props.handleSubmit}> 
     <div>
       <Field component={Input} name="login"

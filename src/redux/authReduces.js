@@ -25,7 +25,7 @@ export const setUserData = (userId, email, login, isAuth) => ({ type: SET_USER_D
 
 export const me = () => {
   return (dispatch) => {
-    loginApi.me().then(data => {
+    return loginApi.me().then(data => {
       if (data.resultCode === 0) {
         dispatch(setUserData(data.data.id, data.data.email, data.data.login, true));
       }
@@ -54,9 +54,6 @@ export const logout = () => {
     });
   }
 }
-
-
-
 
 
 export default authReducer;
