@@ -11,6 +11,7 @@ export const WithValidationComponent = (Component) => {
           <Component {...input} {...props} />
         </div>
         { hasError && <span> {meta.error} </span> }
+  
       </div>
     );
   };
