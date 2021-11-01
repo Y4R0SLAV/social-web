@@ -22,6 +22,7 @@ export const setInitialize = () => ({ type: SET_INITIALIZE });
 export const initializeApp = () => {
   return (dispatch) => {
     let promise = dispatch(me());
+
     Promise.all([promise]).then(() => { dispatch(setInitialize()) });
   }
 }

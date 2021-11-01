@@ -17,9 +17,6 @@ import { initializeApp } from './redux/appReducer';
 import Preloader from './components/common/Preloader/Preloader';
 
 
-import store from "./redux/reduxStore";
-import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
 
 class App extends React.Component {
   componentDidMount() {
@@ -30,8 +27,6 @@ class App extends React.Component {
     if (!this.props.initialized) return <Preloader />
 
     return (
-      <BrowserRouter>
-        <Provider store={store}>
           <div className="app-wrapper">
             <HeaderContainer />
             <Navbar />
@@ -47,9 +42,7 @@ class App extends React.Component {
 
               <Route path="/login" render={() => <Login />} />
             </div>
-          </div>
-        </Provider>
-      </BrowserRouter>)
+          </div>)
   }
 }
 
