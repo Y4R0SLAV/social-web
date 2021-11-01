@@ -1,51 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Preloader from '../../common/Preloader/Preloader';
 import s from "./ProfileInfo.module.css";   
 
-class ProfileStatus extends React.Component {
-  state = {
-    editMode: false,
-    status: this.props.status
-  }
 
-  onChangeStatus = (e) => {
-    this.setState({
-      status: e.currentTarget.value
-    })
-  }
+const ProfileStatus = (props) => {
+  const [editMode, setEditMode] = useState(false);
+  const [status, setStatus] = useState(props.status);
+
+  useEffect(() => {
+    setStatus(props.status);
+  }, [props.status]);
   
-  activateEditMode = () => {
-    this.setState({
-      editMode: true
-    })
+  const activateEditMode = () => {
+    setEditMode(true);
   }
 
-  deactivateEditMode = () => {
-    this.setState({
-      editMode: false
-    })
-    this.props.updateStatus(this.state.status);
+  const deactivateEditMode = () => {
+    setEditMode(false);
+    props.updateStatus(status);
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.status !== this.props.status) {
-      this.setState({
-        status: this.props.status
-      })
-    }
+  const onChangeStatus = (e) => {
+    setStatus(e.currentTarget.value);
   }
 
-  render() {
-    return (
-      <div>
-        { this.state.editMode 
-          ? <div> <input autoFocus = {true} onBlur={this.deactivateEditMode} value = {this.state.status} onChange={this.onChangeStatus}/> </div>
-          : <div> <span onClick={this.activateEditMode}> {this.props.status || "--------------"} </span> </div> }
-        
-        
-      </div>
-    )
+  return <div>
+  { editMode 
+    ? <div> <input autoFocus = {true} onBlur={deactivateEditMode}
+                    value = {status} onChange={onChangeStatus}/> </div>
+    : <div> <span onClick={activateEditMode}> {props.status || "--------------"} </span> </div> 
   }
+</div>
 }
-
 export default ProfileStatus;
