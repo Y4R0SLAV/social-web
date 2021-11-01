@@ -23,7 +23,7 @@ const ProfileStatus = (props) => {
   const onChangeStatus = (e) => {
     setStatus(e.currentTarget.value);
   }
-
+  
   return <div>
   { editMode 
     ? <div> <input autoFocus = {true} onBlur={deactivateEditMode}

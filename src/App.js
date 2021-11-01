@@ -17,6 +17,10 @@ import { initializeApp } from './redux/appReducer';
 import Preloader from './components/common/Preloader/Preloader';
 
 
+import store from "./redux/reduxStore";
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+
 class App extends React.Component {
   componentDidMount() {
     this.props.initializeApp();
@@ -25,22 +29,27 @@ class App extends React.Component {
   render() {
     if (!this.props.initialized) return <Preloader />
 
-    return <div className="app-wrapper">
-      <HeaderContainer />
-      <Navbar />
-      <div className="app-wrapper-content">
-        <Route path="/dialogs" render={() => <DialogsContainer />} />
-        <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
-        <Route path="/news" render={() => <News />} />
-        <Route path="/music" render={() => <Music />} />
+    return (
+      <BrowserRouter>
+        <Provider store={store}>
+          <div className="app-wrapper">
+            <HeaderContainer />
+            <Navbar />
+            <div className="app-wrapper-content">
+              <Route path="/dialogs" render={() => <DialogsContainer />} />
+              <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
+              <Route path="/news" render={() => <News />} />
+              <Route path="/music" render={() => <Music />} />
 
-        <Route path="/users" render={() => <UsersContainer />} />
+              <Route path="/users" render={() => <UsersContainer />} />
 
-        <Route path="/settings" render={() => <Settings />} />
+              <Route path="/settings" render={() => <Settings />} />
 
-        <Route path="/login" render={() => <Login />} />
-      </div>
-    </div>
+              <Route path="/login" render={() => <Login />} />
+            </div>
+          </div>
+        </Provider>
+      </BrowserRouter>)
   }
 }
 
