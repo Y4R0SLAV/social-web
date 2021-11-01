@@ -1,7 +1,7 @@
 import React from 'react';
 import s from "./MyPosts.module.css";
 import Post from './Post/Post';
-import { reduxForm, Field } from 'redux-form';
+import {  Field } from 'redux-form';
 import WithReduxFormComponent from './../../../hoc/withReduxFrom';
 import {WithValidationComponent} from './../../common/FormsControl/FormsControl';
 import { requiered } from '../../../utilits/validators/validator';
@@ -24,8 +24,10 @@ const PostForm = (props) => {
 
 const PostWithResux = WithReduxFormComponent(PostForm, 'post');
 
-const MyPosts = (props) => {
-  let postsElements = props.posts.map( post => <Post message={post.message} likesCount ={post.likesCount} key={post.id}/>) 
+const MyPosts =React.memo(props  => {
+  let postsElements = [...props.posts]
+                      .reverse()
+                      .map( post => <Post message={post.message} likesCount ={post.likesCount} key={post.id}/>) 
 
   const createNewPost = (formData) => {
     props.addPost(formData.postBody);
@@ -40,6 +42,6 @@ const MyPosts = (props) => {
       </div>
     </div>
   );
-}
+})
 
 export default MyPosts;
