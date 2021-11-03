@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import './App.css';
 import { Provider, connect } from 'react-redux';
@@ -9,16 +9,18 @@ import store from "./redux/reduxStore";
 import Preloader from './components/common/Preloader/Preloader';
 
 // Core components
+import HeaderContainer from './components/Header/HeaderContainer';
 import Navbar from './components/Navbar/Navbar';
+
+// popular componetns
 import ProfileContainer from './components/Profile/ProfileContainer';
 import News from './components/News/News';
 import Music from './components/Music/Music';
-import Settings from './components/Settings/Settings';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
-import UsersContainer from './components/Users/UsersContainer';
-import HeaderContainer from './components/Header/HeaderContainer';
-import Login from './components/Login/login';
 
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const Login = React.lazy(() => import('./components/Login/login'));
+const Settings = React.lazy(() => import('./components/Settings/Settings'));
+const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
 
 class App extends React.Component {
   componentDidMount() {
@@ -33,13 +35,15 @@ class App extends React.Component {
         <HeaderContainer />
         <Navbar />
         <div className="app-wrapper-content">
-          <Route path="/dialogs" render={() => <DialogsContainer />} />
-          <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
-          <Route path="/news" render={() => <News />} />
-          <Route path="/music" render={() => <Music />} />
-          <Route path="/users" render={() => <UsersContainer />} />
-          <Route path="/settings" render={() => <Settings />} />
-          <Route path="/login" render={() => < Login />} />
+          <Suspense fallback={<div>Loading...</div>}>
+            <Route path="/dialogs" render={() => <DialogsContainer />} />
+            <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
+            <Route path="/news" render={() => <News />} />
+            <Route path="/music" render={() => <Music />} />
+            <Route path="/users" render={() => <UsersContainer />} />
+            <Route path="/settings" render={() => <Settings />} />
+            <Route path="/login" render={() => < Login />} />
+          </Suspense>
         </div>
       </div>)
   }
