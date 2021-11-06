@@ -2,13 +2,23 @@ import React from 'react';
 import Preloader from '../../common/Preloader/Preloader';
 import s from "./ProfileInfo.module.css";
 import ProfileStatus from './ProfileStatus'
+import userPhoto from '../../../assets/images/user.img'
 
-const ProfileInfo = ({profile, status, updateStatus}) => {
+
+const Contact = ({contactTitle, contactInfo}) => {
+  return <div className={s.contactService}> <b> {contactTitle} </b>: {contactInfo} </div>
+}
+
+const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto}) => {
   if (!profile) {
     return <Preloader />
   }
 
-  const contacts = profile.contacts;
+  const onAvatarSelected = (e) => {
+    if (e.target.files.length) {
+      savePhoto(e.target.files[0]);
+    }
+  }
 
   return (
     <div>
@@ -16,32 +26,26 @@ const ProfileInfo = ({profile, status, updateStatus}) => {
         <img src="https://phonoteka.org/uploads/posts/2021-03/1616706027_48-p-kartinki-dlya-fona-saita-53.jpg" alt="" />
       </div>
       <div className={s.descriptionBlock}>
-        
-        <div className={s.avatar}>
-          <img src={profile.photos.large}/>
+        <div>
+          <img src={profile.photos.large || userPhoto } className={s.avatar}/>
+          { isOwner && <input type="file" onChange = {onAvatarSelected}/>}
         </div>
+        
 
         <div className={s.description}>
 
-          <div className={s.fullName}>
-            {profile.fullName}
-          </div>
-
+          <div className={s.fullName}> {profile.fullName} </div>
           <ProfileStatus status={status} updateStatus={updateStatus}/>
 
-          <div className={s.contacts}>
-            <ul className={s.contactsList}>
-              <li><span className={s.contactService}>facebook: </span><a href="">{contacts.facebook}</a></li>
-              <li><span className={s.contactService}>website: </span><a href="">{contacts.swebsite}</a></li>
-              <li><span className={s.contactService}>vk: </span><a href="">{contacts.vk}</a></li>
-              <li><span className={s.contactService}>twitter: </span><a href="">{contacts.twitter}</a></li>
-              <li><span className={s.contactService}>instagram: </span> <a href="">{contacts.instagram}</a></li>
-              <li><span className={s.contactService}>youtube: </span><a href="">{contacts.youtube}</a></li>
-              <li><span className={s.contactService}>github: </span><a href="">{contacts.github}</a></li>
-              <li><span className={s.contactService}>mainLink: </span><a href="">{contacts.mainLink }</a></li>
-            </ul>
-          </div>
-
+          <div><b>Looking for a job</b>: {profile.lookingForAJob ? "Yes" : "No"}</div>
+          { profile.lookingForAJob && profile.lookingForAJobDescription && <div><b>Profile skills</b>: {profile.lookingForAJobDescription}</div>}
+          
+          <div className={s.contactsList}>
+            {Object.keys(profile.contacts).map(key => {
+              return <Contact key={key} contactTitle={key} contactInfo={profile.contacts[key]}/>
+            }) }
+          </div>  
+          
           <div className={s.lookingForAJob}>
             {profile.lookingForAJob}
           </div>

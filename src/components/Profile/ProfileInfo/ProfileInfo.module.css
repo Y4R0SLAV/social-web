@@ -17,9 +17,15 @@
 
 .contactsList {
   list-style: none;
+  display: block;
+  padding-left: 10px;
 }
 
 .contactService {
-  display:inline-block;
+  display:block;
   width: 100px;
+}
+
+.avatar {
+  max-width: 200px;
 }
