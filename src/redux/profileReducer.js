@@ -79,13 +79,17 @@ export const updateUserStatus = (status) => async (dispatch) => {
 
 export const savePhoto = (file) => async (dispatch) => {
   let data = await profileApi.savePhoto(file);
-  console.log(data);
-  console.log(file);
   if (data.resultCode === 0) {
     dispatch(setPhoto(data.data.photos));
   }
 }
 
+export const setProfileData = (profile) => async (dispatch) => {
+  let data = await profileApi.setProfileData(profile);
+  if (data.resultCode === 0) {
+    dispatch(setUserProfile(profile));
+  }
+}
 
 
 export default profileReducer;

@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Preloader from '../../common/Preloader/Preloader';
 import s from "./ProfileInfo.module.css";
-import ProfileStatus from './ProfileStatus'
-import userPhoto from '../../../assets/images/user.img'
+import userPhoto from '../../../assets/images/user.img';
+import ProfileStatus from './ProfileStatus';
+import DescriptionBlock from './Description';
+import DescriptionBlockForm from './DescriptionForm';
 
+const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, setProfileData}) => {
+  const [editDescriptionMode, setEditDescriptionMode] = useState(false);
 
-const Contact = ({contactTitle, contactInfo}) => {
-  return <div className={s.contactService}> <b> {contactTitle} </b>: {contactInfo} </div>
-}
-
-const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto}) => {
   if (!profile) {
     return <Preloader />
   }
@@ -21,37 +20,28 @@ const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto}) => {
   }
 
   return (
-    <div>
-      <div className={s.header}>
-        <img src="https://phonoteka.org/uploads/posts/2021-03/1616706027_48-p-kartinki-dlya-fona-saita-53.jpg" alt="" />
-      </div>
-      <div className={s.descriptionBlock}>
+    <div className={s.profileWrapper}>
+      <div className={s.leftSide}>
         <div>
-          <img src={profile.photos.large || userPhoto } className={s.avatar}/>
+          <img src={profile.photos.large || userPhoto } className={s.avatar}/> <br />
           { isOwner && <input type="file" onChange = {onAvatarSelected}/>}
         </div>
-        
+      </div>
 
-        <div className={s.description}>
-
+      <div className={s.rightSide}>
+        <div className={s.nameAndStatus}>
           <div className={s.fullName}> {profile.fullName} </div>
           <ProfileStatus status={status} updateStatus={updateStatus}/>
+        </div>
 
-          <div><b>Looking for a job</b>: {profile.lookingForAJob ? "Yes" : "No"}</div>
-          { profile.lookingForAJob && profile.lookingForAJobDescription && <div><b>Profile skills</b>: {profile.lookingForAJobDescription}</div>}
-          
-          <div className={s.contactsList}>
-            {Object.keys(profile.contacts).map(key => {
-              return <Contact key={key} contactTitle={key} contactInfo={profile.contacts[key]}/>
-            }) }
-          </div>  
-          
-          <div className={s.lookingForAJob}>
-            {profile.lookingForAJob}
-          </div>
-
+        <div>
+          {!editDescriptionMode 
+          ? <DescriptionBlock profile={profile} setEditDescriptionMode={setEditDescriptionMode}/>
+          : <DescriptionBlockForm profile={profile} setEditDescriptionMode={setEditDescriptionMode} setProfileData={setProfileData}/>}
+                        
         </div>
       </div>
+      
 
     </div>
   );

@@ -1,17 +1,23 @@
-.header img{
-  width: 100%;
-  height: 120px;
-}
-
-.descriptionBlock {
+.profileWrapper {
   display: flex;
-  padding: 10px;
 }
 
-.description .fullName {
+.leftSide {
+  width: 30%;
+}
+.rightSide {
+  width: 70%;
+}
+
+.rightSide .nameAndStatus{
+  margin: 20px;
+}
+
+.fullName {
   font-size: 36px;
 }
-.description .status {
+
+.status {
   opacity: 0.7;
 }
 
@@ -29,3 +35,13 @@
 .avatar {
   max-width: 200px;
 }
+
+
+.descriptionButton {
+  display: inline-block;
+  cursor: pointer;
+  border: 1px solid black;
+  margin: 20px auto;
+  padding: 2px;
+  border-radius: 3px;
+} 
