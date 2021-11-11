@@ -30,8 +30,6 @@ export const loginApi = {
   logout() {
     return instance.delete('auth/login').then(response => response.data);
   }
-
-
 }
 
 export const profileApi = {
@@ -61,4 +59,6 @@ export const profileApi = {
     return instance.put('profile', profile).then(response => response.data)
   }
 }
+
+
 

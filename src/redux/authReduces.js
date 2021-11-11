@@ -1,5 +1,4 @@
 import { loginApi } from './../api/api';
-import { stopSubmit } from 'redux-form';
 
 const SET_USER_DATA = "auth/SET_USER_DATA";
 
@@ -31,12 +30,13 @@ export const me = () => async (dispatch) => {
   return data;
 }
 
-export const login = (email, password, rememberMe) => async (dispatch) => {
+export const login = (values, setFieldError) => async (dispatch) => {
+  const { email, password, rememberMe } = values;
   let data = await loginApi.login(email, password, rememberMe);
   if (data.resultCode === 0) {
     dispatch(me());
   } else {
-    dispatch(stopSubmit('login', { _error: data.messages.length > 0 ? data.messages[0] : 'some error' }));
+    setFieldError("password", data.messages[0]);
   }
 }
 
