@@ -2,7 +2,10 @@ import React from 'react';
 import s from "./ProfileInfo.module.css";
 
 const Contact = ({contactTitle, contactInfo}) => {
-  return <div className={s.contactService}> <b> {contactTitle} </b>: {contactInfo} </div>
+  return <div className={s.contactService}>
+        <span className={s.contactTitle}> <b> {contactTitle} </b>: </span> 
+        <span className={s.contactInfo}> <a href={contactInfo}> {contactInfo} </a> </span>
+      </div>
 }
 
 const DescriptionBlock = ({setEditDescriptionMode, profile}) => {

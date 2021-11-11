@@ -27,9 +27,15 @@
   padding-left: 10px;
 }
 
+.contactTitle{
+  text-align: center;
+  border: 1px dotted black;
+  display: inline-block;
+  width: 20%;
+}
+
 .contactService {
   display:block;
-  width: 100px;
 }
 
 .avatar {

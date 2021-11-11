@@ -20,7 +20,6 @@ const DescriptionBlockForm = ({profile, setEditDescriptionMode, setProfileData})
 
       onSubmit = {(values, { setSubmitting }) => {
         setTimeout(() => {
-          alert(JSON.stringify({...values, userId: profile.userId, fullName: profile.fullName}, null, 2));
           setEditDescriptionMode(false);
           setProfileData({...profile, ...values});
           setSubmitting(false);
