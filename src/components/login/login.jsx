@@ -11,13 +11,13 @@ const validatePassword = (value) => {
   } return "";
 }
 
-const LoginForm = ({login}) => {
+const LoginForm = ({login, captchaUrl}) => {
   return <Formik
-      initialValues={{ email: "", password: "", rememberMe: false}}
+      initialValues={{ email: "", password: "", rememberMe: false, captcha: ""}}
 
       onSubmit = {(values, { setSubmitting, setFieldError }) => {
         setTimeout(() => {
-          const response = login(values, setFieldError);
+          login(values, setFieldError);
           setSubmitting(false);
         }, 400);  
       }}>
@@ -31,23 +31,26 @@ const LoginForm = ({login}) => {
 
           <Field type="checkbox" name="rememberMe" /> <br />
 
+          {captchaUrl && <img src={captchaUrl}/>}  <br />
+          {captchaUrl && <Field name="captcha" /> }
+
           <button type="submit" disabled={isSubmitting}> Submit </button>
         </Form>
       )}
     </Formik>
 }
 
-const Login = ({login, isAuth}) => {
+const Login = ({login, isAuth, captchaUrl}) => {
   if (isAuth) { 
     return (<Redirect to="/profile"/>);
   };
 
   return <>
   <h1> login </h1>
-  <LoginForm login={login}/>
+  <LoginForm login={login} captchaUrl={captchaUrl}/>
   </>
 }
 
-const mapStateToProps = (state) => ({isAuth: state.auth.isAuth});
+const mapStateToProps = (state) => ({isAuth: state.auth.isAuth, captchaUrl: state.auth.captchaUrl});
 
 export default connect(mapStateToProps, {login})(Login);
