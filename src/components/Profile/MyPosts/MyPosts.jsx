@@ -1,42 +1,52 @@
 import React from 'react';
 import s from "./MyPosts.module.css";
 import Post from './Post/Post';
-import {  Field } from 'redux-form';
-import WithReduxFormComponent from './../../../hoc/withReduxFrom';
-import {WithValidationComponent} from './../../common/FormsControl/FormsControl';
-import { requiered } from '../../../utilits/validators/validator';
-import { MaxLengthCreator } from './../../../utilits/validators/validator';
+import { Formik, Field, Form } from 'formik';
+import * as Yup from 'yup';
 
+const DisplayingErrorMessagesSchema = Yup.object().shape({
+  postBody: Yup.string()
+    .max(100, 'Too Long!')
+    .required('Required')
+});
 
-const maxLength100 = MaxLengthCreator(100);
-const Textarea = WithValidationComponent('textarea');
+const PostForm = ({createNewPost}) => {
+  return <Formik
+      initialValues={{ postBody: ""}}
+      validationSchema={DisplayingErrorMessagesSchema}
+      onSubmit = {(values, { setSubmitting, resetForm }) => {
+        setTimeout(() => {
+          createNewPost(values.postBody);
+          resetForm({postBody: ""});
+          setSubmitting(false);
+        }, 400);  
+      }}>
 
-const PostForm = (props) => {
-  return <form onSubmit={props.handleSubmit}>
-    <div>
-      <Field component={Textarea} name="postBody" validate={[requiered, maxLength100]}/>
-    </div>
-    <div>
-      <button >Add post</button>
-    </div>
-  </form>
+      {({isSubmitting, errors, touched }) => (
+        <Form>
+          <Field as="textarea" name="postBody" />
+          {touched.postBody && errors.postBody && <div>{errors.postBody}</div>}
+          <button type="submit" disabled={isSubmitting}> Create post </button>
+        </Form>
+      )}
+    </Formik>
 }
 
-const PostWithResux = WithReduxFormComponent(PostForm, 'post');
-
-const MyPosts =React.memo(props  => {
+const MyPosts = React.memo(props  => {
   let postsElements = [...props.posts]
                       .reverse()
                       .map( post => <Post message={post.message} likesCount ={post.likesCount} key={post.id}/>) 
 
-  const createNewPost = (formData) => {
-    props.addPost(formData.postBody);
+  const createNewPost = (postBody) => {
+    props.addPost(postBody);
   }
 
   return (
     <div className={s.myPosts}>
       <h3>My posts</h3>
-      <PostWithResux onSubmit={createNewPost}/>
+
+      <PostForm createNewPost={createNewPost}/>
+
       <div className={s.posts}>
         {postsElements}
       </div>

@@ -2,31 +2,35 @@ import React from 'react';
 import s from "./Dialogs.module.css";
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import { Field} from 'redux-form';
-import WithReduxFormComponent from './../../hoc/withReduxFrom';
-import {WithValidationComponent} from './../common/FormsControl/FormsControl';
-import { requiered } from '../../utilits/validators/validator';
-import { MaxLengthCreator } from './../../utilits/validators/validator';
+import { Formik, Field, Form } from 'formik';
 
+const DialogsForm = ({sendMessage}) => {
+  return <Formik
+      initialValues={{ messageBody: ""}}
 
-const maxLength30 = MaxLengthCreator(30);
-const Textarea = WithValidationComponent('textarea');
+      onSubmit = {(values, { setSubmitting }) => {
+        setTimeout(() => {
+          sendMessage(values.messageBody);
+          values.messageBody = "";
+          setSubmitting(false);
+        }, 400);  
+      }}>
 
-let DialogsForm = (props) => {
-  return <form onSubmit={props.handleSubmit}>
-        <div> <Field component={Textarea} name="messageBody" placeholder="Enter your message" validate={[requiered, maxLength30]}/></div>
-        <div> <button>Send Message</button> </div>
-    </form>
+      {({isSubmitting}) => (
+        <Form>
+          <Field as="textarea" name="messageBody" />
+          <button type="submit" disabled={isSubmitting}> Send Message </button>
+        </Form>
+      )}
+    </Formik>
 }
-
-DialogsForm = WithReduxFormComponent(DialogsForm, 'dialog');
 
 const Dialogs = (props) => {
   let dialogsElements = props.messagePage.dialogs.map( d => <DialogItem name={d.name} id={d.id} key={d.id}/>);
   let messagesElements = props.messagePage.messages.map( m => <Message message={m.message} key={m.id}/>);
 
-  let onSubmit = (formData) => {
-    props.sendMessage(formData.messageBody);
+  let sendMessage = (messageBody) => {
+    props.sendMessage(messageBody);
   }
 
   return (
@@ -36,7 +40,7 @@ const Dialogs = (props) => {
       </div>
       <div className={s.messages}>
         <div> {messagesElements} </div>
-        <DialogsForm onSubmit={onSubmit}/>
+        <DialogsForm sendMessage={sendMessage}/>
         </div>
     </div>
   );
