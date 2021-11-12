@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.css';
 import { Provider, connect } from 'react-redux';
 import { initializeApp } from './redux/appReducer';
@@ -36,13 +36,18 @@ class App extends React.Component {
         <Navbar />
         <div className="app-wrapper-content">
           <Suspense fallback={<div>Loading...</div>}>
-            <Route path="/dialogs" render={() => <DialogsContainer />} />
-            <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
-            <Route path="/news" render={() => <News />} />
-            <Route path="/music" render={() => <Music />} />
-            <Route path="/users" render={() => <UsersContainer />} />
-            <Route path="/settings" render={() => <Settings />} />
-            <Route path="/login" render={() => < Login />} />
+            <Switch>
+              <Redirect exact from="/" to="/profile" />
+
+              <Route path="/dialogs" render={() => <DialogsContainer />} />
+              <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
+              <Route path="/news" render={() => <News />} />
+              <Route path="/music" render={() => <Music />} />
+              <Route path="/users" render={() => <UsersContainer />} />
+              <Route path="/settings" render={() => <Settings />} />
+              <Route path="/login" render={() => < Login />} />
+              <Route path="*" render={() => <div> 404 NOT FOUND </div>} />
+            </Switch>
           </Suspense>
         </div>
       </div>)

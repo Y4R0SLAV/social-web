@@ -17,7 +17,7 @@ const PostForm = ({createNewPost}) => {
       onSubmit = {(values, { setSubmitting, resetForm }) => {
         setTimeout(() => {
           createNewPost(values.postBody);
-          resetForm({postBody: ""});
+          resetForm();
           setSubmitting(false);
         }, 400);  
       }}>

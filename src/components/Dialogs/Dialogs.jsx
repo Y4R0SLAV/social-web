@@ -8,10 +8,10 @@ const DialogsForm = ({sendMessage}) => {
   return <Formik
       initialValues={{ messageBody: ""}}
 
-      onSubmit = {(values, { setSubmitting }) => {
+      onSubmit = {(values, { setSubmitting, resetForm }) => {
         setTimeout(() => {
           sendMessage(values.messageBody);
-          values.messageBody = "";
+          resetForm();
           setSubmitting(false);
         }, 400);  
       }}>
