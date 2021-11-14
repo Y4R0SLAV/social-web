@@ -1,19 +1,29 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import Preloader from '../../common/Preloader/Preloader';
 import s from "./ProfileInfo.module.css";
-import userPhoto from '../../../assets/images/user.img';
-import ProfileStatus from './ProfileStatus';
-import DescriptionBlock from './Description';
-import DescriptionBlockForm from './DescriptionForm';
+import userPhoto from '../../../assets/images/user.png'
+import ProfileStatus from './ProfileStatus'
+import DescriptionBlock from './Description'
+import DescriptionBlockForm from './DescriptionForm'  
+import { ProfileType } from '../../../types/types';
 
-const ProfileInfo = ({profile, status, updateStatus, isOwner, savePhoto, setProfileData}) => {
+type PropsType = {
+  profile: ProfileType
+  status: string
+  updateStatus: (status: string) => void
+  isOwner: boolean
+  savePhoto: () => void
+  setProfileData: (profile: ProfileType) => void
+}
+
+const ProfileInfo: FC<PropsType> = ({profile, status, updateStatus, isOwner, savePhoto, setProfileData}) => {
   const [editDescriptionMode, setEditDescriptionMode] = useState(false);
 
   if (!profile) {
     return <Preloader />
   }
 
-  const onAvatarSelected = (e) => {
+  const onAvatarSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files.length) {
       savePhoto(e.target.files[0]);
     }

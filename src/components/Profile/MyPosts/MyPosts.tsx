@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import s from "./MyPosts.module.css";
 import Post from './Post/Post';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
+import { PostType } from '../../../types/types';
 
 const DisplayingErrorMessagesSchema = Yup.object().shape({
   postBody: Yup.string()
@@ -10,7 +11,11 @@ const DisplayingErrorMessagesSchema = Yup.object().shape({
     .required('Required')
 });
 
-const PostForm = ({createNewPost}) => {
+type FormPropsType = {
+  createNewPost: (newPostBody: string) => void
+}
+
+const PostForm: FC<FormPropsType> = ({createNewPost}) => {
   return <Formik
       initialValues={{ postBody: ""}}
       validationSchema={DisplayingErrorMessagesSchema}
@@ -32,12 +37,18 @@ const PostForm = ({createNewPost}) => {
     </Formik>
 }
 
-const MyPosts = React.memo(props  => {
+
+type PropsType = {
+  posts: Array<PostType>
+  addPost: (newPostBody: string) => void
+}
+
+const MyPosts: FC<PropsType> = React.memo(props  => {
   let postsElements = [...props.posts]
                       .reverse()
-                      .map( post => <Post message={post.message} likesCount ={post.likesCount} key={post.id}/>) 
+                      .map( post => <Post id={6} message={post.message} likesCount ={post.likesCount} key={post.id}/>)  // id must be individual
 
-  const createNewPost = (postBody) => {
+  const createNewPost = (postBody: string) => {
     props.addPost(postBody);
   }
 
