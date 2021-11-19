@@ -1,8 +1,15 @@
-import React from 'react';
+import React, {FC} from 'react';
 import s from "./ProfileInfo.module.css";
 import { Formik, Form, Field} from 'formik';
+import { ProfileType } from '../../../types/types';
 
-const DescriptionBlockForm = ({profile, setEditDescriptionMode, setProfileData}) => {
+type PropsType = {
+  profile: ProfileType
+  setEditDescriptionMode: (isEdit: boolean) => void
+  setProfileData: (profile: ProfileType) => void
+}
+
+const DescriptionBlockForm: FC<PropsType> = ({profile, setEditDescriptionMode, setProfileData}) => {
   return <Formik
       initialValues={{ lookingForAJob: profile.lookingForAJob,
                         lookingForAJobDescription: profile.lookingForAJobDescription,

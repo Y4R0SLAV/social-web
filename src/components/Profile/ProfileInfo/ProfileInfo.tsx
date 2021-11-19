@@ -8,11 +8,11 @@ import DescriptionBlockForm from './DescriptionForm'
 import { ProfileType } from '../../../types/types';
 
 type PropsType = {
-  profile: ProfileType
+  profile: ProfileType | null
   status: string
   updateStatus: (status: string) => void
   isOwner: boolean
-  savePhoto: () => void
+  savePhoto: (photo: any) => void
   setProfileData: (profile: ProfileType) => void
 }
 
@@ -23,7 +23,7 @@ const ProfileInfo: FC<PropsType> = ({profile, status, updateStatus, isOwner, sav
     return <Preloader />
   }
 
-  const onAvatarSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onAvatarSelected = (e: any) => {
     if (e.target.files.length) {
       savePhoto(e.target.files[0]);
     }

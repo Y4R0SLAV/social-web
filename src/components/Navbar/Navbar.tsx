@@ -1,6 +1,6 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import s from "./Navbar.module.css";
+import React from 'react'
+import { NavLink } from 'react-router-dom'
+import s from "./Navbar.module.css"
 
 const Navbar = () => {
   return (
@@ -24,7 +24,7 @@ const Navbar = () => {
           <NavLink to="/users" activeClassName={s.active}> Users </NavLink>
         </div>
       </nav>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar
