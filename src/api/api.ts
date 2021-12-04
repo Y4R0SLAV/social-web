@@ -1,5 +1,4 @@
 import axios from "axios"
-import { Url } from "url"
 import { ProfileType } from "../types/types"
 
 const instance = axios.create({
@@ -12,13 +11,13 @@ const instance = axios.create({
 
 export const usersApi = {
   getUsers(currentPage = 1, pageSize = 10) {
-    return instance.get(`users?page=${currentPage}&count=${pageSize}`).then(response => response.data)
+    return instance.get<any>(`users?page=${currentPage}&count=${pageSize}`).then(response => response.data)
   },
   follow(userId: number) {
-    return instance.post(`follow/${userId}`).then(response => response.data)
+    return instance.post<any>(`follow/${userId}`).then(response => response.data)
   },
   unfollow(userId: number) {
-    return instance.delete(`follow/${userId}`).then(response => response.data)
+    return instance.delete<any>(`follow/${userId}`).then(response => response.data)
   }
 }
 export enum ResultCodesEnum {
@@ -63,6 +62,14 @@ type dataType = {
   captcha: string | null
 }
 
+type updateStatusType = {
+  data: {
+    status: string
+  }
+  resultCode: ResultCodesEnum
+  messages: Array<string>
+}
+
 export const loginApi = {
   me() {
     return instance.get<MeResponse>(`/auth/me`).then(response => response.data)
@@ -77,21 +84,21 @@ export const loginApi = {
 
 export const profileApi = {
   getProfile(userId: number) {
-    return instance.get(`profile/${userId}`).then(response => response.data)
+    return instance.get<any>(`profile/${userId}`).then(response => response.data)
   },
 
   getStatus(userId: number) {
-    return instance.get(`profile/status/${userId}`).then(response => response.data)
+    return instance.get<any>(`profile/status/${userId}`).then(response => response.data)
   },
 
   updateStatus(status: string) {
-    return instance.put('profile/status', { status: status }).then(response => response.data)
+    return instance.put<{status: string}, updateStatusType>('profile/status', { status: status })
   },
 
   savePhoto(file: any) {
     const formData = new FormData()
     formData.append("image", file)
-    return instance.put('profile/photo', formData, {
+    return instance.put<any, any>('profile/photo', formData, {
       headers: {
         'Content-type': 'multipart/form-data'
       }
@@ -99,7 +106,7 @@ export const profileApi = {
   },
 
   setProfileData(profile: ProfileType) {
-    return instance.put('profile', profile).then(response => response.data)
+    return instance.put<any, any>('profile', profile).then(response => response.data)
   }
 }
 

@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "homepage": "https://y4r0slav.github.io/social-web/",
   "private": true,
-  "engines" : {
-    "node" : "=17.2.0" 
+  "engines": {
+    "node": "=17.2.0"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
@@ -32,8 +32,8 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts build",
+    "start": "export SET NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider; gatsby build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
