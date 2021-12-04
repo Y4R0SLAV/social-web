@@ -1,4 +1,4 @@
-import { loginApi, secureApi } from '../api/api'
+import { loginApi, MeResponse, ResultCodesEnum, ResultCodeWithCaptcha, secureApi } from '../api/api'
 import { Dispatch } from "react"
 import { AppStateType } from "./reduxStore"
 import { ThunkAction } from "redux-thunk"
@@ -54,9 +54,9 @@ export const setUserData = (userId: number | null, email: string | null,
 // thunks: 
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 
-export const me = (): ThunkType => async (dispatch) => {
+export const me = (): ThunkAction<Promise<MeResponse>, AppStateType, unknown, ActionsType> => async (dispatch) => {
   const data = await loginApi.me()
-  if (data.resultCode === 0) {
+  if (data.resultCode === ResultCodesEnum.Success) {
     dispatch(setUserData(data.data.id, data.data.email, data.data.login, true))
   }
   return data;
@@ -68,10 +68,10 @@ type ValuesDataType = { email: string, password: string, rememberMe: boolean, ca
 export const login = (values: ValuesDataType, setFieldError: Function): ThunkType => async (dispatch) => {
   const { email, password, rememberMe, captcha } = values
   const data = await loginApi.login(email, password, rememberMe, captcha)
-  if (data.resultCode === 0) {
+  if (data.resultCode === ResultCodesEnum.Success) {
     dispatch(me())
   } else {
-    if (data.resultCode === 10) {
+    if (data.resultCode === ResultCodeWithCaptcha.CaptchaIsRequired) {
       dispatch(getCaptchaUrl())
     }
     setFieldError("rememberMe", data.messages[0])
@@ -80,7 +80,7 @@ export const login = (values: ValuesDataType, setFieldError: Function): ThunkTyp
 
 export const logout = (): ThunkType => async (dispatch) => {
   const data = await loginApi.logout()
-  if (data.resultCode === 0) {
+  if (data.resultCode === ResultCodesEnum.Success) {
     dispatch(setUserData(null, null, null, false))
   }
 }
