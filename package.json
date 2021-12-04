@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "homepage": "https://y4r0slav.github.io/social-web/",
   "private": true,
+  "engines" : {
+    "node" : ">=0.14" 
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
