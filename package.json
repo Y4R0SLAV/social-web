@@ -4,7 +4,7 @@
   "homepage": "https://y4r0slav.github.io/social-web/",
   "private": true,
   "engines" : {
-    "node" : ">=16.9.1" 
+    "node" : "=17.2.0" 
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
